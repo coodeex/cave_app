@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import firebase from '../util/firebase';
-import ProductList from './ProductList';
+import ListOfProducts from './getProducts';
 
 export default function BatchForm() {
   const [name, setName] = useState('');
-  const productList = ProductList
-  console.log("lista on",productList)
+  const [list, setList] = useState();
+  // console.log("batchlista",ListOfProducts);
+  setList(ListOfProducts)
+  
   // const [amount, setAmount] = useState(0); // in grams
   // const [price, setPrice] = useState(0); // in euros e.g. 3.28 [€]
 
