@@ -1,0 +1,4 @@
+tietokantaan lisätä tuotteita joilla on nimi, paino ja hinta
+tietokannasta poistaa tuotteita
+mahdollisuus lisätä valmistettuja eriä, joissa on listattu käytettyjen tuotteiden nimet ja painot
+Kun erä lisätään, niin lasketaan litrahinta ja vähennetään tietokannasta käytetyt ainekset
