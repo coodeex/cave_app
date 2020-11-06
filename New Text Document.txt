@@ -1,4 +1,12 @@
-tietokantaan lisätä tuotteita joilla on nimi, paino ja hinta
-tietokannasta poistaa tuotteita
-mahdollisuus lisätä valmistettuja eriä, joissa on listattu käytettyjen tuotteiden nimet ja painot
+status	action
+
+	tietokantaan 
+ok		lisätä tuotteita(products) joilla on nimi, hinta ja paino
+		lisätä valmistettuja eriä(batches), joissa on listattu käytettyjen tuotteiden nimet ja painot
+	tietokannasta 
+ok		saada kaikki tuotteet
+ok		saada yksittäinen tuote id:n perusteella
+ok		poistaa tuotteita
+	
+
 Kun erä lisätään, niin lasketaan litrahinta ja vähennetään tietokannasta käytetyt ainekset

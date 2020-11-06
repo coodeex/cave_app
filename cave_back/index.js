@@ -18,13 +18,20 @@ app.get('/api/products', (request, response) => {
 app.post('/api/products', (request, response) => {
   const body = request.body
 
-  if (body.content === undefined) {
-    return response.status(400).json({ error: 'content missing' })
+  if (body.name === undefined) {
+    return response.status(400).json({ error: 'product name missing' })
+  }
+  if (body.price === undefined) {
+    return response.status(400).json({ error: 'product price missing' })
+  }
+  if (body.weight === undefined) {
+    return response.status(400).json({ error: 'product weigth missing' })
   }
 
   const product = new Product({
-    content: body.content,
-    important: body.important || false,
+    name: body.name,
+    price: body.price,
+    weight: body.weight, //|| 0 
     date: new Date(),
   })
 
@@ -57,8 +64,8 @@ app.put('/api/products/:id', (request, response, next) => {
   const body = request.body
 
   const product = {
-    content: body.content,
-    important: body.important,
+    price: body.price,
+    weight: body.weight,
   }
 
   Product.findByIdAndUpdate(request.params.id, product, { new: true })

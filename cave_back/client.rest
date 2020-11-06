@@ -2,10 +2,29 @@ GET http://localhost:3001/api/products/5fa548115d2c8b0e348e5331
 
 ###
 
+GET http://localhost:3001/api/products
+
+###
+
+DELETE http://localhost:3001/api/products/5fa54f7b028c820d40410e7f
+
+###
+
 POST http://localhost:3001/api/products
 Content-Type: application/json
 
 {
-  "content": "2 product to notebase",
-  "important": true
+  "name": "maltsu1",
+  "price": 2.3,
+  "weight": 1
+}
+
+###
+
+PUT http://localhost:3001/api/products/5fa55123fecbf329d4aa8bea
+Content-Type: application/json
+
+{
+  "price": 1.7,
+  "weight": 0.5
 }

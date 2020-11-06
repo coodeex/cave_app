@@ -13,9 +13,9 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   })
 
 const productSchema = new mongoose.Schema({
-  content: String,
-  date: Date,
-  important: Boolean,
+  name: String,
+  price: Number,
+  weight: Number,
 })
 
 productSchema.set('toJSON', {
