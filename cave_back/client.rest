@@ -1,0 +1,11 @@
+GET http://localhost:3001/api/products/5fa548115d2c8b0e348e5331
+
+###
+
+POST http://localhost:3001/api/products
+Content-Type: application/json
+
+{
+  "content": "2 product to notebase",
+  "important": true
+}

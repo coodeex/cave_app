@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 require('dotenv').config()
-const Note = require('./models/note')
+const Product = require('./models/product')
 
 const cors = require('cors')
 
@@ -9,35 +9,35 @@ app.use(cors())
 app.use(express.json())
 app.use(express.static('build'))
 
-app.get('/api/notes', (request, response) => {
-  Note.find({}).then(notes => {
-    response.json(notes.map(note => note.toJSON()))
+app.get('/api/products', (request, response) => {
+  Product.find({}).then(products => {
+    response.json(products.map(product => product.toJSON()))
   })
 })
 
-app.post('/api/notes', (request, response) => {
+app.post('/api/products', (request, response) => {
   const body = request.body
 
   if (body.content === undefined) {
     return response.status(400).json({ error: 'content missing' })
   }
 
-  const note = new Note({
+  const product = new Product({
     content: body.content,
     important: body.important || false,
     date: new Date(),
   })
 
-  note.save().then(savedNote => {
-    response.json(savedNote.toJSON())
+  product.save().then(savedProduct => {
+    response.json(savedProduct.toJSON())
   })
 })
 
-app.get('/api/notes/:id', (request, response, next) => {
-  Note.findById(request.params.id)
-    .then(note => {
-      if (note) {
-        response.json(note.toJSON())
+app.get('/api/products/:id', (request, response, next) => {
+  Product.findById(request.params.id)
+    .then(product => {
+      if (product) {
+        response.json(product.toJSON())
       } else {
         response.status(404).end()
       }
@@ -45,25 +45,25 @@ app.get('/api/notes/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-app.delete('/api/notes/:id', (request, response, next) => {
-  Note.findByIdAndRemove(request.params.id)
+app.delete('/api/products/:id', (request, response, next) => {
+  Product.findByIdAndRemove(request.params.id)
     .then(result => {
       response.status(204).end()
     })
     .catch(error => next(error))
 })
 
-app.put('/api/notes/:id', (request, response, next) => {
+app.put('/api/products/:id', (request, response, next) => {
   const body = request.body
 
-  const note = {
+  const product = {
     content: body.content,
     important: body.important,
   }
 
-  Note.findByIdAndUpdate(request.params.id, note, { new: true })
-    .then(updatedNote => {
-      response.json(updatedNote.toJSON())
+  Product.findByIdAndUpdate(request.params.id, product, { new: true })
+    .then(updatedProduct => {
+      response.json(updatedProduct.toJSON())
     })
     .catch(error => next(error))
 })
