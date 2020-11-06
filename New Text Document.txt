@@ -9,4 +9,4 @@ ok		saada yksittäinen tuote id:n perusteella
 ok		poistaa tuotteita
 	
 
-Kun erä lisätään, niin lasketaan litrahinta ja vähennetään tietokannasta käytetyt ainekset
+	Kun erä lisätään, niin lasketaan litrahinta ja vähennetään tietokannasta käytetyt ainekset
