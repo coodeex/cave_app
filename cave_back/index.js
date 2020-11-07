@@ -17,14 +17,15 @@ app.get('/api/products', (request, response) => {
 
 app.post('/api/products', (request, response) => {
   const body = request.body
+  console.log(body)
 
-  if (body.name === undefined) {
+  if (body.name === undefined || body.name === '') {
     return response.status(400).json({ error: 'product name missing' })
   }
-  if (body.price === undefined) {
+  if (body.price === undefined || body.price === '') {
     return response.status(400).json({ error: 'product price missing' })
   }
-  if (body.weight === undefined) {
+  if (body.weight === undefined || body.weight === '') {
     return response.status(400).json({ error: 'product weigth missing' })
   }
 

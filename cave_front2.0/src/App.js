@@ -1,66 +1,102 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Product from './components/Product'
+import productService from './services/products'
 
 const App = () => {
-  const [products, setProducts] = useState([]) 
-  const [newProduct, setNewProduct] = useState('')
-  const [showAll, setShowAll] = useState(true)
+  const [products, setProducts] = useState([])
+  const [newProductName, setNewProductName] = useState('')
+  const [newProductPrice, setNewProductPrice] = useState('')
+  const [newProductWeight, setNewProductWeight] = useState('')
 
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/api/products')
-      .then(response => {
-        console.log('promise fulfilled')
-        setProducts(response.data)
+    productService
+      .getAll()
+      .then(initialProducts => {
+        setProducts(initialProducts)
       })
   }, [])
 
-  console.log('render', products.length, 'products')
+  console.log('products', products)
+
+  const validateAddProduct = (event) => {
+    event.preventDefault()
+    if (newProductWeight < 10) {
+      if (window.confirm("Onko paino oikeesti alle 10 grammaa?")) {
+        addProduct(event)
+      }
+    } else {
+      addProduct(event)
+    }
+  }
 
   const addProduct = (event) => {
     event.preventDefault()
     const productObject = {
-      content: newProduct,
-      date: new Date().toISOString(),
-      important: Math.random() > 0.5,
-      id: products.length + 1,
+      name: newProductName,
+      price: newProductPrice,
+      weight: newProductWeight,
     }
-  
-    setProducts(products.concat(productObject))
-    setNewProduct('')
+
+    productService
+      .create(productObject)
+      .then(returnedProduct => {
+        setProducts(products.concat(returnedProduct))
+        setNewProductName('')
+        setNewProductPrice('')
+        setNewProductWeight('')
+      }).catch(err => alert(err.response.data.error))
   }
 
-  const handleProductChange = (event) => {
-    console.log(event.target.value)
-    setNewProduct(event.target.value)
+  const handleProductNameChange = (event) => {
+    setNewProductName(event.target.value)
   }
 
-  const productsToShow = showAll
-    ? products
-    : products.filter(product => product.important)
+  const handleProductPriceChange = (event) => {
+    setNewProductPrice(event.target.value)
+  }
+
+  const handleProductWeightChange = (event) => {
+    setNewProductWeight(event.target.value)
+    // const financialGoal = (event.target.validity.valid) ? event.target.value : null;
+    // setNewProductWeight(financialGoal)
+  }
 
   return (
     <div>
       <h1>Products</h1>
-    
+
       <ul>
-        {productsToShow.map((product, i) => 
+        {products.map((product, i) =>
           <Product key={i} product={product} />
         )}
       </ul>
-      <form onSubmit={addProduct}>
+      <form onSubmit={validateAddProduct}>
+
         <input
-          value={newProduct}
-          onChange={handleProductChange}
+          value={newProductName}
+          placeholder="Amarillo"
+          onChange={handleProductNameChange}
+          list="opts"
+        />
+        <datalist id="opts">
+          {products.map(p => <option key={p.id}>{p.name}</option>)}
+        </datalist>
+
+        <input
+          pattern="[0-9]*\.?[0-9]?[0-9]?"
+          placeholder="8.9"
+          value={newProductPrice}
+          onChange={handleProductPriceChange}
         />
         <input
-          value={newProduct}
-          onChange={handleProductChange}
+          pattern="[0-9]*"
+          placeholder="100"
+          value={newProductWeight}
+          onChange={handleProductWeightChange}
         />
+
         <button type="submit">save</button>
-      </form>   
+      </form>
     </div>
   )
 }

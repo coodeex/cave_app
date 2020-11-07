@@ -14,9 +14,9 @@ POST http://localhost:3001/api/products
 Content-Type: application/json
 
 {
-  "name": "maltsu1",
-  "price": 2.3,
-  "weight": 1
+  "name": "maltsu3",
+  "price": 5,
+  "weight": 1.6
 }
 
 ###
