@@ -9,7 +9,7 @@ const App = () => {
   const [newProductPrice, setNewProductPrice] = useState('')  // product input price
   const [newProductWeight, setNewProductWeight] = useState('')  // product input weight
 
-  useEffect(() => { 
+  useEffect(() => {
     productService
       .getAll()
       .then(initialProducts => {
@@ -17,19 +17,16 @@ const App = () => {
       })
   }, [])
 
-  console.log('products', products)
-
-
   return (
     <div>
       <h1>Products</h1>
-
       <ul>
         {products.map((product, i) =>
           <Product key={i} product={product} />
         )}
       </ul>
-      <ProductForm products={products} setProducts={setProducts} newProductName={newProductName} setNewProductName={setNewProductName} newProductPrice={newProductPrice} setNewProductPrice={setNewProductPrice} newProductWeight={newProductWeight} setNewProductWeight={setNewProductWeight}/>
+      <ProductForm products={products} setProducts={setProducts} newProductName={newProductName} setNewProductName={setNewProductName} newProductPrice={newProductPrice} setNewProductPrice={setNewProductPrice} newProductWeight={newProductWeight} setNewProductWeight={setNewProductWeight} />
+      <button onClick={() => console.log(products)}>log products</button> {/* for dev purposes */}
     </div>
   )
 }
