@@ -6,7 +6,7 @@ GET http://localhost:3001/api/products
 
 ###
 
-DELETE http://localhost:3001/api/products/5fa54f7b028c820d40410e7f
+DELETE http://localhost:3001/api/products/5fa6cf87b338720ba491c249
 
 ###
 
