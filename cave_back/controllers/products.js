@@ -1,5 +1,7 @@
 const productsRouter = require('express').Router()
 const Product = require('../models/product')
+const axios = require('axios')
+
 
 productsRouter.get('/', (request, response) => {
   Product.find({}).then(products => {
@@ -7,9 +9,9 @@ productsRouter.get('/', (request, response) => {
   })
 })
 
-productsRouter.post('/', (request, response) => {
+
+productsRouter.post('/', async (request, response) => {
   const body = request.body
-  console.log(body)
 
   if (body.name === undefined || body.name === '') {
     return response.status(400).json({ error: 'product name missing' })
@@ -21,16 +23,45 @@ productsRouter.post('/', (request, response) => {
     return response.status(400).json({ error: 'product weigth missing' })
   }
 
-  const product = new Product({
-    name: body.name,
-    price: body.price,
-    weight: body.weight, //|| 0 
-    date: new Date(),
-  })
+  let productAlreadyInDB = await Product.findOne({ name: body.name });
 
-  product.save().then(savedProduct => {
-    response.json(savedProduct.toJSON())
-  })
+  if (productAlreadyInDB == null) {//if does not exist then create a new Product
+    const product = new Product({
+      name: body.name,
+      price: body.price,
+      weight: body.weight,
+      date: new Date(),
+    })
+
+    product.save().then(savedProduct => {
+      console.log({
+        product: savedProduct.toJSON(),
+        updatedExisting: false
+      })
+      response.json({
+        product: savedProduct.toJSON(),
+        updatedExisting: false
+      })
+    })
+  } else {//product already exists so it's weight and price must be updated
+    await Product.findOneAndUpdate({ name: body.name },
+      {
+        $inc: {
+          price: body.price,
+          weight: body.weight,
+        },
+        date: new Date()
+      },
+      {
+        new: true,
+        upsert: true
+      }).then(savedProduct => {
+        response.json({
+          product: savedProduct.toJSON(),
+          updatedExisting: true
+        })
+      })
+  }
 })
 
 productsRouter.get('/:id', (request, response, next) => {

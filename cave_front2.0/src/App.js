@@ -21,7 +21,11 @@ const App = () => {
     <div>
       <h1>Products</h1>
       <ul>
-        {products.map((product, i) =>
+        {products.slice().reverse().filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i).reverse().sort(function (a, b) {
+          if (a.name < b.name) { return -1; }
+          if (a.name > b.name) { return 1; }
+          return 0;
+        }).map((product, i) =>
           <Product key={i} product={product} />
         )}
       </ul>

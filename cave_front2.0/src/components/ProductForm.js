@@ -4,8 +4,6 @@ import productService from '../services/products'
 
 const ProductForm = ({ products, setProducts, newProductName, setNewProductName, newProductPrice, setNewProductPrice, newProductWeight, setNewProductWeight }) => {
 
-
-
   const validateAddProduct = (event) => {
     event.preventDefault()
     if (newProductWeight < 10) {
@@ -27,12 +25,22 @@ const ProductForm = ({ products, setProducts, newProductName, setNewProductName,
 
     productService
       .create(productObject)
-      .then(returnedProduct => {
-        setProducts(products.concat(returnedProduct))
+      .then(returnedProductAndStatus => {
+        if (returnedProductAndStatus.updatedExisting === false) {//created a new product
+          setProducts(products.concat(returnedProductAndStatus.product))
+        } else {//updated a existing product
+          setProducts(products.map(product => product.id !== returnedProductAndStatus.product.id
+            ? product
+            : returnedProductAndStatus.product
+          ))
+        }
         setNewProductName('')
         setNewProductPrice('')
         setNewProductWeight('')
-      }).catch(err => alert(err.response.data.error))
+      }).catch(err => {
+        alert(err.response.data.error)
+        console.log(err.response)
+      })
   }
 
   const handleProductNameChange = (event) => {
@@ -58,7 +66,11 @@ const ProductForm = ({ products, setProducts, newProductName, setNewProductName,
         />
       </label>
       <datalist id="opts">
-        {products.map(p => <option key={p.id}>{p.name}</option>)}
+        {products.reverse().sort(function (a, b) {
+          if (a.name < b.name) { return -1; }
+          if (a.name > b.name) { return 1; }
+          return 0;
+        }).map(p => <option key={p.id}>{p.name}</option>)}
       </datalist>
       <label>Hinta (€)
         <input
