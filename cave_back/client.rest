@@ -28,3 +28,13 @@ Content-Type: application/json
   "price": 1.7,
   "weight": 0.5
 }
+
+###
+
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+  "username": "juha",
+  "password": "salasana"
+}

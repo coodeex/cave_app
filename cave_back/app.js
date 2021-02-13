@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const productRouter = require('./controllers/products')
+const loginRouter = require('./controllers/login')
 
 const mongoose = require('mongoose')
 
@@ -29,6 +30,7 @@ const unknownEndpoint = (request, response) => {
 }
 
 app.use('/api/products', productRouter)
+app.use('/api/login', loginRouter)
 app.use(unknownEndpoint)
 
 const errorHandler = (error, request, response, next) => {
