@@ -4,7 +4,7 @@ const app = express()
 const cors = require('cors')
 const productRouter = require('./controllers/products')
 const loginRouter = require('./controllers/login')
-
+const usersRouter = require('./controllers/users')
 const mongoose = require('mongoose')
 
 mongoose.set('useFindAndModify', false)
@@ -31,6 +31,7 @@ const unknownEndpoint = (request, response) => {
 
 app.use('/api/products', productRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/users', usersRouter)
 app.use(unknownEndpoint)
 
 const errorHandler = (error, request, response, next) => {

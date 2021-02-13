@@ -8,10 +8,10 @@ const userSchema = mongoose.Schema({
   },
   name: String,
   passwordHash: String,
-  blogs: [
+  products: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Blog'
+      ref: 'Product'
     }
   ],
 })
