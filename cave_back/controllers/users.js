@@ -7,7 +7,8 @@ usersRouter.get('/', async (request, response) => {
   response.json(users.map(u => u.toJSON()))
 })
 
-usersRouter.post('/', async (request, response) => {
+//Uncomment the method below only if you want to add more users
+/*usersRouter.post('/', async (request, response) => {
   const body = request.body
 
   if(body.password.length < 3 || body.username.length < 3){
@@ -28,6 +29,6 @@ usersRouter.post('/', async (request, response) => {
   const savedUser = await user.save()
 
   response.json(savedUser)
-})
+})*/
 
 module.exports = usersRouter
