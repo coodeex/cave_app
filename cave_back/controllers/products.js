@@ -1,6 +1,5 @@
 const productsRouter = require('express').Router()
 const Product = require('../models/product')
-const axios = require('axios')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
@@ -23,7 +22,7 @@ productsRouter.post('/', async (request, response) => {
   const token = getTokenFrom(request)
   const decodedToken = jwt.verify(token, process.env.SECRET)
   if (!token || !decodedToken.id) {
-    console.log('token missing or invalid')
+    //console.log('token missing or invalid')
     return response.status(401).json({ error: 'token missing or invalid' })
   }
   const user = await User.findById(decodedToken.id)

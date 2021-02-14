@@ -5,9 +5,12 @@ const cors = require('cors')
 const productRouter = require('./controllers/products')
 const loginRouter = require('./controllers/login')
 const usersRouter = require('./controllers/users')
+const middleware = require('./utils/middleware')
 const mongoose = require('mongoose')
 
-mongoose.set('useFindAndModify', false)
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 const url = process.env.MONGODB_URI
 console.log('connecting to', url)
 
@@ -23,27 +26,14 @@ app.use(cors())
 
 app.use(express.json())
 app.use(express.static('build'))
-
-
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
-}
+app.use(middleware.tokenExtractor)
 
 app.use('/api/products', productRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/users', usersRouter)
-app.use(unknownEndpoint)
 
-const errorHandler = (error, request, response, next) => {
-  console.error(error.message)
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
 
-  if (error.name === 'CastError' && error.kind == 'ObjectId') {
-    return response.status(400).send({ error: 'malformatted id' })
-  }
-
-  next(error)
-}
-
-app.use(errorHandler)
 
 module.exports = app

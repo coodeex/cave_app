@@ -47,6 +47,18 @@ POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
-  "username": "juhale",
-  "password": "paleale"
+  "username": "",
+  "password": ""
+}
+
+###
+
+POST http://localhost:3001/api/products
+Content-type: application/json 
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJ1c2VybmFtZSI6Imp1aGF4aXMiLCJpZCI6IjVmMjE2MzU5NThlMDgwMzkyNDA0OWJjMiIsImlhdCI6MTU5NjAyMzY0OH0.fh3UWFRC2FPTDwcTW4UH3vAmUUodpU__hXHTHRcJbJE
+
+{
+  "name": "juup",
+  "price": 5,
+  "weight": 1.6
 }
