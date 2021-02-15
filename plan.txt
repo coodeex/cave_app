@@ -1,0 +1,29 @@
+products[] (name, weight)
+date
+batchSize
+description
+oneBottlePrice
+
+frontista token tuotearray(nimi, hinta, paino), batchsize, description, ylimääräset kulut+työn hinta
+backendi laskee käytetyn tuotteen hinnan painon perusteella->vähentää sen productin tietokannan hinnasta JA lisää sen 
+batchin kokonaishintaan
+
+käsitellään batches.post('/')ssa
+token
+onko annettu kaikki tarvittavat tiedot
+eikai oo saman nimistä batchii
+ei voi käyttää enempää tuotetta kun sen paino on
+
+const products = await Product.find({})
+
+let kokonaishinta = ylimääräset kulut+työn hinta
+jokasen käytetyn tuotteen olemassa oleva hinta ja paino päivitetään
+
+	käytetyn hinta = vanha hinta * (käytetty paino/vanha paino)
+	nykynen hinta = vanha hinta - käytetyn hinta
+	nykynen paino = vanha paino - käytetty paino
+	
+	käytetyn hinta lisätään kokonaishintaan
+
+
+
