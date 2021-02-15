@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import ProductForm from './components/ProductForm'
 import productService from './services/products'
+import batchService from './services/batches'
 import LoginForm from './components/LoginForm'
 import Logout from './components/Logout'
 import ProductsList from './components/ProductsList'
+import BatchesList from './components/BatchesList'
 
 const App = () => {
   const [products, setProducts] = useState([])  // all products
   const [newProductName, setNewProductName] = useState('')  // product input name
   const [newProductPrice, setNewProductPrice] = useState('')  // product input price
   const [newProductWeight, setNewProductWeight] = useState('')  // product input weight
+
+  const [batches, setBatches] = useState([])  // all batches
+  const [newBatchName, setNewBatchName] = useState('')
+  const [newBatchProducts, setNewBatchProducts] = useState([])
+  const [newBatchSize, setNewBatchSize] = useState('')
+  const [newBatchDescription, setNewBatchDescription] = useState('')
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -19,6 +28,14 @@ const App = () => {
       .getAll()
       .then(initialProducts => {
         setProducts(initialProducts)
+      })
+  }, [])
+
+  useEffect(() => {
+    batchService
+      .getAll()
+      .then(initialBatches => {
+        setBatches(initialBatches)
       })
   }, [])
 
@@ -33,6 +50,8 @@ const App = () => {
 
   return (
     <div>
+      <h1>Batches</h1>
+      <BatchesList batches={batches}/>
       <h1>Products</h1>
       <ProductsList products={products}/>
       {user === null
