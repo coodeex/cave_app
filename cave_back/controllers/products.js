@@ -22,7 +22,6 @@ productsRouter.post('/', async (request, response) => {
   const token = getTokenFrom(request)
   const decodedToken = jwt.verify(token, process.env.SECRET)
   if (!token || !decodedToken.id) {
-    //console.log('token missing or invalid')
     return response.status(401).json({ error: 'token missing or invalid' })
   }
   const user = await User.findById(decodedToken.id)
@@ -34,7 +33,7 @@ productsRouter.post('/', async (request, response) => {
     return response.status(400).json({ error: 'product price missing' })
   }
   if (body.weight === undefined || body.weight === '') {
-    return response.status(400).json({ error: 'product weigth missing' })
+    return response.status(400).json({ error: 'product weight missing' })
   }
 
   let productAlreadyInDB = await Product.findOne({ name: body.name });
@@ -60,17 +59,6 @@ productsRouter.post('/', async (request, response) => {
       product: savedProduct.toJSON(),
       updatedExisting: false
     })
-
-    // product.save().then(savedProduct => {
-    //   console.log({
-    //     product: savedProduct.toJSON(),
-    //     updatedExisting: false
-    //   })
-    //   response.json({
-    //     product: savedProduct.toJSON(),
-    //     updatedExisting: false
-    //   })
-    // })
   } else {//product already exists so it's weight and price must be updated
     const savedProduct = await Product.findOneAndUpdate({ name: body.name },
       {
@@ -89,13 +77,6 @@ productsRouter.post('/', async (request, response) => {
       product: savedProduct.toJSON(),
       updatedExisting: true
     })
-
-    // then(savedProduct => {
-    //   response.json({
-    //     product: savedProduct.toJSON(),
-    //     updatedExisting: true
-    //   })
-    // })
   }
 })
 
@@ -120,18 +101,6 @@ productsRouter.delete('/:id', async (request, response, next) => {
 
   await Product.findByIdAndRemove(request.params.id)
   response.status(204).end().catch(error => next(error))
-})
-
-productsRouter.put('/:id', async (request, response, next) => {
-  const body = request.body
-
-  const product = {
-    price: body.price,
-    weight: body.weight,
-  }
-
-  const updatedProduct = await Product.findByIdAndUpdate(request.params.id, product, { new: true })
-  response.json(updatedProduct.toJSON()).catch(error => next(error))
 })
 
 module.exports = productsRouter

@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+require('express-async-errors')
 const app = express()
 const cors = require('cors')
 const productRouter = require('./controllers/products')
@@ -32,8 +33,8 @@ app.use('/api/products', productRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/users', usersRouter)
 
-app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
+app.use(middleware.unknownEndpoint)
 
 
 module.exports = app
