@@ -13,8 +13,15 @@ const userSchema = mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Product'
-    }
+    },
   ],
+  batches: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Batch'
+    },
+  ],
+
 })
 
 userSchema.plugin(uniqueValidator)

@@ -2,7 +2,7 @@ GET http://localhost:3001/api/products/5fa548115d2c8b0e348e5331
 
 ###
 
-GET http://localhost:3001/api/products
+GET http://localhost:3001/api/productss
 
 ###
 
@@ -27,13 +27,12 @@ Content-Type: application/json
 {
   "name": "juup",
   "price": 5,
-  "weight": 1.6,
-  "userId": "6028fb798215333ae488f6d7"
+  "weight": 1.6
 }
 
 ###
 
-PUT http://localhost:3001/api/products/5fa55123fecbf329d4aa8bea
+PUT http://localhost:3001/api/products/602a35e47f143b3054f8dd95
 Content-Type: application/json
 
 {
@@ -55,10 +54,32 @@ Content-Type: application/json
 
 POST http://localhost:3001/api/products
 Content-type: application/json 
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJ1c2VybmFtZSI6Imp1aGF4aXMiLCJpZCI6IjVmMjE2MzU5NThlMDgwMzkyNDA0OWJjMiIsImlhdCI6MTU5NjAyMzY0OH0.fh3UWFRC2FPTDwcTW4UH3vAmUUodpU__hXHTHRcJbJE
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imp1aGFsZSIsImlkIjoiNjAyOGZhZGU4MjE1MzMzYWU0ODhmNmQ2IiwiaWF0IjoxNjEzNDA2OTE4fQ.8CQgcamRK_RcBbQCb4QQW3mlJSZVUkAUwA-_aEO0cl8
 
 {
-  "name": "juup",
-  "price": 5,
-  "weight": 1.6
+  "name": "Amarillo",
+  "price": 100,
+  "weight": 50
+}
+
+###
+
+POST http://localhost:3001/api/batches
+Content-type: application/json 
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imp1aGFsZSIsImlkIjoiNjAyOGZhZGU4MjE1MzMzYWU0ODhmNmQ2IiwiaWF0IjoxNjEzNDA2OTE4fQ.8CQgcamRK_RcBbQCb4QQW3mlJSZVUkAUwA-_aEO0cl8
+
+{
+"batchName": "liikaa",
+"products": [{
+    "productName":"Amarillo",
+    "usedWeight": 100
+  },
+  {
+    "productName":"Magnum",
+    "usedWeight": 100
+  }],
+"batchSize": 10,
+"description": "very good IPA",
+"extraCosts": 30
+
 }
