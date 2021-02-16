@@ -4,6 +4,10 @@ const productSchema = new mongoose.Schema({
   name: String,
   price: Number,
   weight: Number,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
 })
 
 productSchema.set('toJSON', {
