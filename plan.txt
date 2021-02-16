@@ -3,6 +3,7 @@ date
 batchSize
 description
 oneBottlePrice
+extraCosts
 
 frontista token tuotearray(nimi, hinta, paino), batchsize, description, ylimääräset kulut+työn hinta
 backendi laskee käytetyn tuotteen hinnan painon perusteella->vähentää sen productin tietokannan hinnasta JA lisää sen 
@@ -24,6 +25,11 @@ jokasen käytetyn tuotteen olemassa oleva hinta ja paino päivitetään
 	nykynen paino = vanha paino - käytetty paino
 	
 	käytetyn hinta lisätään kokonaishintaan
+
+Joooo hyvältä näyttää next:
+
+frontendin batchproductsien lähettäminen
+ja lisää extraCosts label input
 
 
 

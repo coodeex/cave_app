@@ -4,10 +4,10 @@ import Batch from '../components/Batch'
 const BatchesList = ({ batches }) => {
   return (
     <ul>
-        {batches.map((batch, i) =>
-          <Batch key={i} batch={batch} />
-        )}
-      </ul>
+      {batches.map((batch, i) =>
+        <Batch key={i} batch={batch} />
+      )}
+    </ul>
   )
 }
 

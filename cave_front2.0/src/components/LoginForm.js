@@ -1,6 +1,7 @@
 import React from 'react'
 import loginService from '../services/login'
 import productService from '../services/products'
+import batchService from '../services/batches'
 
 const LoginForm = ({ username, setUser, setUsername, password, setPassword }) => {
   
@@ -14,6 +15,7 @@ const LoginForm = ({ username, setUser, setUsername, password, setPassword }) =>
         'loggedCaveAppUser', JSON.stringify(user)
       )
       productService.setToken(user.token)
+      batchService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
@@ -25,7 +27,6 @@ const LoginForm = ({ username, setUser, setUsername, password, setPassword }) =>
     <div>
       <h2>Login</h2>
       <form onSubmit={(e)=>handleLogin(e)}>
-      {/* <form onSubmit={console.log("object")}> */}
         <div>
           username
         <input

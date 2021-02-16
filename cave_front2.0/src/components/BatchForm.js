@@ -1,11 +1,33 @@
 import React from 'react'
 import batchService from '../services/batches'
+import NewBatchProducts from './NewBatchProducts'
 
-//setNewBatchProducts onki vähä haastavampi
-const BatchForm = ({ products, batches, setBatches, newBatchName, setNewBatchName, newBatchProducts, setNewBatchProducts, newBatchSize, setNewBatchSize, newBatchDescription, setNewBatchDescription }) => {
+const BatchForm = ({ products, batches, setBatches, newBatchName, setNewBatchName, newBatchProducts, setNewBatchProducts, newBatchSize, setNewBatchSize, newBatchDescription, setNewBatchDescription, newBatchExtraCosts, setNewBatchExtraCosts }) => {
 
   const validateAddBatch = (event) => {
     event.preventDefault()
+    if (!newBatchName || newBatchName === '') {
+      window.alert("Batch name missing")
+      return
+    }
+    if (newBatchProducts.filter(p => p.productName === '' || p.usedWeight === 0).length !== 0) {
+      window.alert("Used product or weight info missing")
+      return
+    }
+    if (("newBatchProducts", new Set(newBatchProducts.map(p => p.productName)).size !== newBatchProducts.length)) {
+      window.alert("Do not add same product multiple times")
+      return
+    }
+    if (!newBatchSize || newBatchSize === '') {
+      window.alert("Volume missing")
+      return
+    }
+    if (!newBatchDescription || newBatchDescription === '') {
+      window.alert("Description missing")
+      return
+    }
+
+
     if (newBatchSize < 5) {
       if (window.confirm("Is the batch size really under 5 litres?")) {
         addBatch(event)
@@ -22,36 +44,27 @@ const BatchForm = ({ products, batches, setBatches, newBatchName, setNewBatchNam
       products: newBatchProducts,
       batchSize: newBatchSize,
       description: newBatchDescription,
+      extraCosts: newBatchExtraCosts || 0,
     }
-
-    console.log("batchObject\n",batchObject)
-
     batchService
       .create(batchObject)
       .then(returnedBatchAndStatus => {
-        if (returnedBatchAndStatus.updatedExisting === false) {//created a new batch
-          setBatches(batches.concat(returnedBatchAndStatus.batch))
-        } else {//updated a existing batch
-          setBatches(batches.map(batch => batch.id !== returnedBatchAndStatus.batch.id
-            ? batch
-            : returnedBatchAndStatus.batch
-          ))
-        }
+        setBatches(batches.concat(returnedBatchAndStatus.batch))
         setNewBatchName('')
         setNewBatchSize('')
         setNewBatchDescription('')
+        setNewBatchExtraCosts('')
+        setNewBatchProducts([{ productName: "", usedWeight: "" }])
+        if(returnedBatchAndStatus)alert("Batch added succesully")
       }).catch(err => {
         alert(err.response.data.error)
         console.log(err.response)
+        return
       })
   }
 
   const handleBatchNameChange = (event) => {
     setNewBatchName(event.target.value)
-  }
-
-  const handleBatchProductsChange = (event) => {
-    //setNewBatchProducts([("Amarillo",100),("Magnum",80)])
   }
 
   const handleBatchSizeChange = (event) => {
@@ -62,33 +75,22 @@ const BatchForm = ({ products, batches, setBatches, newBatchName, setNewBatchNam
     setNewBatchDescription(event.target.value)
   }
 
+  const handleBatchExtraCostsChange = (event) => {
+    setNewBatchExtraCosts(event.target.value)
+  }
+
   return (
     <form onSubmit={validateAddBatch}>
+      <h2>batch</h2>
       <label>Batch name
         <input
+          type="text"
           value={newBatchName}
           placeholder="Summer IPA"
           onChange={handleBatchNameChange}
         />
       </label>
-      
-      <label>Product used jaaaaa kuinka paljon
-      {/* vois laittaa newBatchProducts arrayhyn aina uuden productin ja painon  */}
-        <input
-          value={newBatchName}
-          placeholder="Amarillo"
-          onChange={handleBatchProductsChange}
-          list="opts"
-        />
-      </label>
-      <datalist id="opts">
-        {products.reverse().sort(function (a, b) {
-          if (a.name < b.name) { return -1; }
-          if (a.name > b.name) { return 1; }
-          return 0;
-        }).map(p => <option key={p.id}>{p.name}</option>)}
-      </datalist>
-
+      <NewBatchProducts products={products} newBatchProducts={newBatchProducts} setNewBatchProducts={setNewBatchProducts} />
       <label>Volume (L)
         <input
           pattern="[0-9]*\.?[0-9]?[0-9]?"
@@ -99,9 +101,18 @@ const BatchForm = ({ products, batches, setBatches, newBatchName, setNewBatchNam
       </label>
       <label>Description
         <input
+          type="text"
           placeholder="jees"
           value={newBatchDescription}
           onChange={handleBatchDescriptionChange}
+        />
+      </label>
+      <label>Extra costs €
+        <input
+          pattern="[0-9]*\.?[0-9]?[0-9]?"
+          placeholder="10.52"
+          value={newBatchExtraCosts}
+          onChange={handleBatchExtraCostsChange}
         />
       </label>
 

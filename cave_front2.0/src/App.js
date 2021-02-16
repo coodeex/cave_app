@@ -16,13 +16,16 @@ const App = () => {
 
   const [batches, setBatches] = useState([])  // all batches
   const [newBatchName, setNewBatchName] = useState('')
-  const [newBatchProducts, setNewBatchProducts] = useState([{ productName: "Amarillo", usedWeight: 100 }, { productName: "Magnum", usedWeight: 80 }])
+  const [newBatchProducts, setNewBatchProducts] = useState([{ productName: "", usedWeight: "" }])
   const [newBatchSize, setNewBatchSize] = useState('')
   const [newBatchDescription, setNewBatchDescription] = useState('')
+  const [newBatchExtraCosts, setNewBatchExtraCosts] = useState('')
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  
+  const devMode = true
 
   useEffect(() => {
     productService
@@ -30,7 +33,7 @@ const App = () => {
       .then(initialProducts => {
         setProducts(initialProducts)
       })
-  }, [])
+  }, [batches])
 
   useEffect(() => {
     batchService
@@ -52,15 +55,17 @@ const App = () => {
 
   return (
     <div>
-      {user === null ? <LoginForm username={username} setUser={setUser} setUsername={setUsername} password={password} setPassword={setPassword} /> : null}
-      {user !== null ? <ProductForm products={products} setProducts={setProducts} newProductName={newProductName} setNewProductName={setNewProductName} newProductPrice={newProductPrice} setNewProductPrice={setNewProductPrice} newProductWeight={newProductWeight} setNewProductWeight={setNewProductWeight} /> : null}
+      {!user && <LoginForm username={username} setUser={setUser} setUsername={setUsername} password={password} setPassword={setPassword} />}
 
-      {user !== null ? <BatchForm products={products} batches={batches} setBatches={setBatches} newBatchName={newBatchName} setNewBatchName={setNewBatchName} newBatchProducts={newBatchProducts} setNewBatchProducts={setNewBatchProducts} newBatchSize={newBatchSize} setNewBatchSize={setNewBatchSize} newBatchDescription={newBatchDescription} setNewBatchDescription={setNewBatchDescription} /> : null}
+      {user && <ProductForm products={products} setProducts={setProducts} newProductName={newProductName} setNewProductName={setNewProductName} newProductPrice={newProductPrice} setNewProductPrice={setNewProductPrice} newProductWeight={newProductWeight} setNewProductWeight={setNewProductWeight} />}
 
-      {user !== null ? <Logout setUser={setUser} /> : null}
+      {user && <BatchForm products={products} batches={batches} setBatches={setBatches} newBatchName={newBatchName} setNewBatchName={setNewBatchName} newBatchProducts={newBatchProducts} setNewBatchProducts={setNewBatchProducts} newBatchSize={newBatchSize} setNewBatchSize={setNewBatchSize} newBatchDescription={newBatchDescription} setNewBatchDescription={setNewBatchDescription} newBatchExtraCosts={newBatchExtraCosts} setNewBatchExtraCosts={setNewBatchExtraCosts} />}
 
-      <button onClick={() => console.log(products)}>log products</button> {/* for dev purposes */}
-      <button onClick={() => console.log(batches)}>log batches</button> {/* for dev purposes */}
+      {user && <Logout setUser={setUser} />}
+
+      {devMode && <button onClick={() => console.log(products)}>log products</button>}
+      {devMode && <button onClick={() => console.log(batches)}>log batches</button>}
+      {devMode && <button onClick={() => console.log(user)}>log user</button>}
       <h1>Products</h1>
       <ProductsList products={products} />
       <h1>Batches</h1>
