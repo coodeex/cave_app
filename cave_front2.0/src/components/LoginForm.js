@@ -4,7 +4,7 @@ import productService from '../services/products'
 import batchService from '../services/batches'
 
 const LoginForm = ({ username, setUser, setUsername, password, setPassword }) => {
-  
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -24,28 +24,30 @@ const LoginForm = ({ username, setUser, setUsername, password, setPassword }) =>
     }
   }
   return (
-    <div>
+    <div className="container">
       <h2>Login</h2>
-      <form onSubmit={(e)=>handleLogin(e)}>
-        <div>
-          username
-        <input
+      <form onSubmit={(e) => handleLogin(e)}>
+        <div className="row">
+          <label className="col-25">Username</label>
+          <input className="col-75"
             type="text"
             value={username}
             name="Username"
             onChange={({ target }) => setUsername(target.value)}
           />
         </div>
-        <div>
-          password
-        <input
+        <div className="row">
+          <label className="col-25">Password</label>
+          <input className="col-75"
             type="password"
             value={password}
             name="Password"
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button type="submit">login</button>
+        <div className="row"><label className="col-25"></label>
+          <button type="submit" className="col-75">Login</button>
+        </div>
       </form>
     </div>
   )

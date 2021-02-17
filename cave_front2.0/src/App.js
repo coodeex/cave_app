@@ -7,6 +7,8 @@ import LoginForm from './components/LoginForm'
 import Logout from './components/Logout'
 import ProductsList from './components/ProductsList'
 import BatchesList from './components/BatchesList'
+import './App.css';
+
 
 const App = () => {
   const [products, setProducts] = useState([])  // all products
@@ -24,7 +26,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  
+
   const devMode = true
 
   useEffect(() => {
@@ -54,14 +56,15 @@ const App = () => {
   }, [])
 
   return (
-    <div>
+    <>
+      <h1 className="CaveAppHeader">Cave App</h1>
       {!user && <LoginForm username={username} setUser={setUser} setUsername={setUsername} password={password} setPassword={setPassword} />}
+      {user && <Logout user={user} setUser={setUser} />}
 
       {user && <ProductForm products={products} setProducts={setProducts} newProductName={newProductName} setNewProductName={setNewProductName} newProductPrice={newProductPrice} setNewProductPrice={setNewProductPrice} newProductWeight={newProductWeight} setNewProductWeight={setNewProductWeight} />}
 
       {user && <BatchForm products={products} batches={batches} setBatches={setBatches} newBatchName={newBatchName} setNewBatchName={setNewBatchName} newBatchProducts={newBatchProducts} setNewBatchProducts={setNewBatchProducts} newBatchSize={newBatchSize} setNewBatchSize={setNewBatchSize} newBatchDescription={newBatchDescription} setNewBatchDescription={setNewBatchDescription} newBatchExtraCosts={newBatchExtraCosts} setNewBatchExtraCosts={setNewBatchExtraCosts} />}
 
-      {user && <Logout setUser={setUser} />}
 
       {devMode && <button onClick={() => console.log(products)}>log products</button>}
       {devMode && <button onClick={() => console.log(batches)}>log batches</button>}
@@ -70,7 +73,7 @@ const App = () => {
       <ProductsList products={products} />
       <h1>Batches</h1>
       <BatchesList batches={batches} />
-    </div>
+    </>
   )
 }
 

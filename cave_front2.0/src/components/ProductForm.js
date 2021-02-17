@@ -1,5 +1,6 @@
 import React from 'react'
 import productService from '../services/products'
+import '../App.css';
 
 
 const ProductForm = ({ products, setProducts, newProductName, setNewProductName, newProductPrice, setNewProductPrice, newProductWeight, setNewProductWeight }) => {
@@ -56,41 +57,52 @@ const ProductForm = ({ products, setProducts, newProductName, setNewProductName,
   }
 
   return (
-    <form onSubmit={validateAddProduct}>
-      <label>Nimi
-        <input
-          value={newProductName}
-          placeholder="Amarillo"
-          onChange={handleProductNameChange}
-          list="opts"
-        />
-      </label>
-      <datalist id="opts">
-        {products.reverse().sort(function (a, b) {
-          if (a.name < b.name) { return -1; }
-          if (a.name > b.name) { return 1; }
-          return 0;
-        }).map(p => <option key={p.id}>{p.name}</option>)}
-      </datalist>
-      <label>Hinta (€)
-        <input
-          pattern="[0-9]*\.?[0-9]?[0-9]?"
-          placeholder="8.99"
-          value={newProductPrice}
-          onChange={handleProductPriceChange}
-        />
-      </label>
-      <label>Paino (g)
-        <input
-          pattern="[0-9]*"
-          placeholder="100"
-          value={newProductWeight}
-          onChange={handleProductWeightChange}
-        />
-      </label>
+    <div className="container">
+      <h1>Product Form</h1>
+      <div>Purchased products can be added to the virtual storage with this form</div>
+      <form onSubmit={validateAddProduct} >
+        <div className="row">
+          <label className="col-25">Name</label>
+          <input className="col-75"
+            value={newProductName}
+            placeholder="Amarillo"
+            onChange={handleProductNameChange}
+            list="opts"
+          />
+        </div>
+        <datalist id="opts">
+          {products.reverse().sort(function (a, b) {
+            if (a.name < b.name) { return -1; }
+            if (a.name > b.name) { return 1; }
+            return 0;
+          }).map(p => <option key={p.id}>{p.name}</option>)}
+        </datalist>
+        <div className="row">
+          <label className="col-25">Price (€)</label>
+          <input className="col-75"
+            pattern="[0-9]*\.?[0-9]?[0-9]?"
+            placeholder="8.99"
+            value={newProductPrice}
+            onChange={handleProductPriceChange}
+          />
+        </div>
+        <div className="row">
+          <label className="col-25">Weight (g)</label>
+          <input className="col-75"
+            pattern="[0-9]*"
+            placeholder="100"
+            value={newProductWeight}
+            onChange={handleProductWeightChange}
+          />
+        </div>
+        <div className="row"><label className="col-25"></label>
+          <button type="submit" className="col-75">save</button>
+        </div>
 
-      <button type="submit">save</button>
-    </form>
+
+        {/* <div className="row"></div> */}
+      </form>
+    </div>
   )
 
 }
