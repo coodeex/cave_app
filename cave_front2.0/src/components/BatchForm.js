@@ -27,7 +27,6 @@ const BatchForm = ({ products, batches, setBatches, newBatchName, setNewBatchNam
       return
     }
 
-
     if (newBatchSize < 5) {
       if (window.confirm("Is the batch size really under 5 litres?")) {
         addBatch(event)
@@ -83,7 +82,7 @@ const BatchForm = ({ products, batches, setBatches, newBatchName, setNewBatchNam
     <div className="container">
       <form onSubmit={validateAddBatch}>
         <h1>Batch Form</h1>
-        <div>A brewed batch can be submitted with this form. It calculates the price of one bottle based on the information provided. Please add all the products used in the batch and provide possible extra costs not related to the products. </div>
+        <div>A brewed batch can be submitted with this form. It calculates the price of one bottle based on the information provided. Please add all the products used in the batch including malts, hops, yeast, etc. and provide possible extra costs not related to the products in the virtual storage. </div>
         <div className="row">
           <label className="col-25">Batch name</label>
           <input className="col-25"
@@ -102,8 +101,7 @@ const BatchForm = ({ products, batches, setBatches, newBatchName, setNewBatchNam
             value={newBatchSize}
             onChange={handleBatchSizeChange}
           />
-        
-          <label className="col-25">Extra costs €</label>
+          <label className="col-25">Extra costs (€)</label>
           <input className="col-25"
             pattern="[0-9]*\.?[0-9]?[0-9]?"
             placeholder="10.52"

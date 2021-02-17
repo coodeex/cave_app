@@ -19,20 +19,18 @@ const NewBatchProducts = ({ products, newBatchProducts, setNewBatchProducts }) =
   }
   return (
     <div className="NewBatchProducts">
-
       {newBatchProducts.map((x, i) => {
         return (
           <div className="row" key={`${x}${i}`}>
-            {/* <div> */}
             <label className="col-25">Used product</label>
             <input className="col-25"
-                type="text"
-                name="productName"
-                placeholder="Malt"
-                value={x.productName}
-                onChange={e => handleInputChange(e, i)}
-                list="opts"
-              />
+              type="text"
+              name="productName"
+              placeholder="Malt"
+              value={x.productName}
+              onChange={e => handleInputChange(e, i)}
+              list="opts"
+            />
             <datalist id="opts">
               {products.reverse().sort(function (a, b) {
                 if (a.name < b.name) { return -1; }
@@ -40,16 +38,14 @@ const NewBatchProducts = ({ products, newBatchProducts, setNewBatchProducts }) =
                 return 0;
               }).map(p => <option key={p.id}>{p.name}</option>)}
             </datalist>
-            {/* </div> */}
             <label className="col-25">Used weight (g)</label>
             <input className="col-25"
-                pattern="[0-9]*\.?[0-9]?[0-9]?"
-                name="usedWeight"
-                placeholder="1000"
-                value={x.usedWeight}
-                onChange={e => handleInputChange(e, i)}
-              />
-            
+              pattern="[0-9]*\.?[0-9]?[0-9]?"
+              name="usedWeight"
+              placeholder="1000"
+              value={x.usedWeight}
+              onChange={e => handleInputChange(e, i)}
+            />
             {newBatchProducts.length !== 1 && <button className="plusMinus" type="button"
               onClick={() => handleRemoveClick(i)}>-</button>}
             {newBatchProducts.length - 1 === i && <button className="plusMinus" onClick={handleAddClick}>+</button>}

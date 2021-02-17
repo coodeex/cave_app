@@ -2,13 +2,12 @@ import React from 'react'
 import productService from '../services/products'
 import '../App.css';
 
-
 const ProductForm = ({ products, setProducts, newProductName, setNewProductName, newProductPrice, setNewProductPrice, newProductWeight, setNewProductWeight }) => {
 
   const validateAddProduct = (event) => {
     event.preventDefault()
     if (newProductWeight < 10) {
-      if (window.confirm("Onko paino oikeesti alle 10 grammaa?")) {
+      if (window.confirm("Is the weight really under 10 grams?")) {
         addProduct(event)
       }
     } else {
@@ -59,7 +58,7 @@ const ProductForm = ({ products, setProducts, newProductName, setNewProductName,
   return (
     <div className="container">
       <h1>Product Form</h1>
-      <div>Purchased products can be added to the virtual storage with this form</div>
+      <div>Purchased products can be added to the virtual storage with this form.</div>
       <form onSubmit={validateAddProduct} >
         <div className="row">
           <label className="col-25">Name</label>
@@ -98,9 +97,6 @@ const ProductForm = ({ products, setProducts, newProductName, setNewProductName,
         <div className="row"><label className="col-25"></label>
           <button type="submit" className="col-75">save</button>
         </div>
-
-
-        {/* <div className="row"></div> */}
       </form>
     </div>
   )
