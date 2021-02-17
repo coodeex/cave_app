@@ -2,7 +2,11 @@ import React from 'react'
 
 const Product = ({ product }) => {
   return (
-  <li>{product.name} {product.weight}g</li>
+    <tr>
+      <td>{product.name}</td>
+      <td>{product.weight}</td>
+      <td>{product.price}</td>
+    </tr>
   )
 }
 

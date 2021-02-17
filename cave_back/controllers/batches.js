@@ -48,7 +48,7 @@ batchesRouter.post('/', async (request, response) => {
   }
 
   let initialProducts = await Product.find({})
-  let batchPrice = body.extraCosts||0
+  let batchPrice = Number(body.extraCosts)||0
   const updateProductsReturnBottlePrice = () => {
 
     body.products.forEach(async product => {

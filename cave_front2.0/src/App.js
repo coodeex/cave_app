@@ -7,14 +7,16 @@ import LoginForm from './components/LoginForm'
 import Logout from './components/Logout'
 import ProductsList from './components/ProductsList'
 import BatchesList from './components/BatchesList'
+import './App.css';
+
 
 const App = () => {
-  const [products, setProducts] = useState([])  // all products
-  const [newProductName, setNewProductName] = useState('')  // product input name
-  const [newProductPrice, setNewProductPrice] = useState('')  // product input price
-  const [newProductWeight, setNewProductWeight] = useState('')  // product input weight
+  const [products, setProducts] = useState([])
+  const [newProductName, setNewProductName] = useState('')
+  const [newProductPrice, setNewProductPrice] = useState('')
+  const [newProductWeight, setNewProductWeight] = useState('')
 
-  const [batches, setBatches] = useState([])  // all batches
+  const [batches, setBatches] = useState([])
   const [newBatchName, setNewBatchName] = useState('')
   const [newBatchProducts, setNewBatchProducts] = useState([{ productName: "", usedWeight: "" }])
   const [newBatchSize, setNewBatchSize] = useState('')
@@ -24,8 +26,8 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  
-  const devMode = true
+
+  const devMode = false //Does not allow user to do any harm, but enables console.log buttons
 
   useEffect(() => {
     productService
@@ -54,23 +56,24 @@ const App = () => {
   }, [])
 
   return (
-    <div>
+    <>
+      <div className="container"><h1>Cave App</h1>CaveBrewery is a home brewery located in Otaniemi, Espoo. This app helps to keep track of products and batches. In addition, it calculates the price of one bottle.{!user && <div><br></br>Log in to add purchased products and brewed batches.</div>}</div>
+
       {!user && <LoginForm username={username} setUser={setUser} setUsername={setUsername} password={password} setPassword={setPassword} />}
+      {user && <Logout user={user} setUser={setUser} />}
 
       {user && <ProductForm products={products} setProducts={setProducts} newProductName={newProductName} setNewProductName={setNewProductName} newProductPrice={newProductPrice} setNewProductPrice={setNewProductPrice} newProductWeight={newProductWeight} setNewProductWeight={setNewProductWeight} />}
 
       {user && <BatchForm products={products} batches={batches} setBatches={setBatches} newBatchName={newBatchName} setNewBatchName={setNewBatchName} newBatchProducts={newBatchProducts} setNewBatchProducts={setNewBatchProducts} newBatchSize={newBatchSize} setNewBatchSize={setNewBatchSize} newBatchDescription={newBatchDescription} setNewBatchDescription={setNewBatchDescription} newBatchExtraCosts={newBatchExtraCosts} setNewBatchExtraCosts={setNewBatchExtraCosts} />}
 
-      {user && <Logout setUser={setUser} />}
 
       {devMode && <button onClick={() => console.log(products)}>log products</button>}
       {devMode && <button onClick={() => console.log(batches)}>log batches</button>}
       {devMode && <button onClick={() => console.log(user)}>log user</button>}
-      <h1>Products</h1>
+
       <ProductsList products={products} />
-      <h1>Batches</h1>
       <BatchesList batches={batches} />
-    </div>
+    </>
   )
 }
 

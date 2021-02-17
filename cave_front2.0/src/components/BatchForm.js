@@ -27,7 +27,6 @@ const BatchForm = ({ products, batches, setBatches, newBatchName, setNewBatchNam
       return
     }
 
-
     if (newBatchSize < 5) {
       if (window.confirm("Is the batch size really under 5 litres?")) {
         addBatch(event)
@@ -55,7 +54,7 @@ const BatchForm = ({ products, batches, setBatches, newBatchName, setNewBatchNam
         setNewBatchDescription('')
         setNewBatchExtraCosts('')
         setNewBatchProducts([{ productName: "", usedWeight: "" }])
-        if(returnedBatchAndStatus)alert("Batch added succesully")
+        if (returnedBatchAndStatus) alert("Batch added succesully")
       }).catch(err => {
         alert(err.response.data.error)
         console.log(err.response)
@@ -80,44 +79,50 @@ const BatchForm = ({ products, batches, setBatches, newBatchName, setNewBatchNam
   }
 
   return (
-    <form onSubmit={validateAddBatch}>
-      <h2>batch</h2>
-      <label>Batch name
-        <input
-          type="text"
-          value={newBatchName}
-          placeholder="Summer IPA"
-          onChange={handleBatchNameChange}
-        />
-      </label>
-      <NewBatchProducts products={products} newBatchProducts={newBatchProducts} setNewBatchProducts={setNewBatchProducts} />
-      <label>Volume (L)
-        <input
-          pattern="[0-9]*\.?[0-9]?[0-9]?"
-          placeholder="20"
-          value={newBatchSize}
-          onChange={handleBatchSizeChange}
-        />
-      </label>
-      <label>Description
-        <input
-          type="text"
-          placeholder="jees"
-          value={newBatchDescription}
-          onChange={handleBatchDescriptionChange}
-        />
-      </label>
-      <label>Extra costs €
-        <input
-          pattern="[0-9]*\.?[0-9]?[0-9]?"
-          placeholder="10.52"
-          value={newBatchExtraCosts}
-          onChange={handleBatchExtraCostsChange}
-        />
-      </label>
-
-      <button type="submit">Add Batch</button>
-    </form>
+    <div className="container">
+      <form onSubmit={validateAddBatch}>
+        <h1>Batch Form</h1>
+        <div>A brewed batch can be submitted with this form. It calculates the price of one bottle based on the information provided. Please add all the products used in the batch including malts, hops, yeast, etc. and provide possible extra costs not related to the products in the virtual storage. </div>
+        <div className="row">
+          <label className="col-25">Batch name</label>
+          <input className="col-25"
+            type="text"
+            value={newBatchName}
+            placeholder="Summer IPA"
+            onChange={handleBatchNameChange}
+          />
+        </div>
+        <NewBatchProducts products={products} newBatchProducts={newBatchProducts} setNewBatchProducts={setNewBatchProducts} />
+        <div className="row">
+          <label className="col-25">Volume (L)</label>
+          <input className="col-25"
+            pattern="[0-9]*\.?[0-9]?[0-9]?"
+            placeholder="20"
+            value={newBatchSize}
+            onChange={handleBatchSizeChange}
+          />
+          <label className="col-25">Extra costs (€)</label>
+          <input className="col-25"
+            pattern="[0-9]*\.?[0-9]?[0-9]?"
+            placeholder="10.52"
+            value={newBatchExtraCosts}
+            onChange={handleBatchExtraCostsChange}
+          />
+        </div>
+        <div className="row">
+          <label className="col-25">Description</label>
+          <textarea className="col-75"
+            type="text"
+            placeholder="Fresh IPA for hot summer days"
+            value={newBatchDescription}
+            onChange={handleBatchDescriptionChange}
+          />
+        </div>
+        <div className="row"><label className="col-25"></label>
+          <button type="submit" className="col-75">Add Batch</button>
+        </div>
+      </form>
+    </div>
   )
 
 }
